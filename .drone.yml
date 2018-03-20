@@ -1,7 +1,31 @@
+#pipeline:
+ # build:
+  #  image: node:latest
+   # commands: npm install
+  #test:
+   # image: node:latest
+    #commands: npm run test
 pipeline:
-  build:
-    image: node:latest
-    commands: npm install
-  test:
-    image: node:latest
-    commands: npm run test
+  run-tests:
+    image: node:6.3.0
+    commands:
+      - cd ./api && npm i --quiet
+      - npm test
+
+  publish-api-docker:
+    image: plugins/docker:1.12
+    username: tinka
+    password: Tinkulita1990
+    email: ecaterina.mirza@workland.com
+    repo: tinka/test
+    tags:
+      - latest
+    dockerfile: ./api/Dockerfile
+    context: ./api/
+
+  slack-notification:
+    image: plugins/slack
+    webhook: https://hooks.slack.com/services/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
+    username: drone-ci
+    channel: Tinka Mirza
+    icon_emoji: ":rocket:"
