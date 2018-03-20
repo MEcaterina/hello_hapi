@@ -1,17 +1,10 @@
-#pipeline:
- # build:
-  #  image: node:latest
-   # commands: npm install
-  #test:
-   # image: node:latest
-    #commands: npm run test
 pipeline:
-  run-tests:
-    image: node:6.3.0
-    commands:
-      - cd ./api && npm i --quiet
-      - npm test
-
+  build:
+    image: node:latest
+    commands: npm install
+  test:
+    image: node:latest
+    commands: npm run test
   publish-api-docker:
     image: plugins/docker:1.12
     username: tinka
